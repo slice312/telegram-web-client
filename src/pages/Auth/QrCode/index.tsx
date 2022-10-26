@@ -74,12 +74,13 @@ export const QrCode = ({link, onPhone}: Props) => {
                 Log out
             </button>
             <button type="button" onClick={async () => {
-                await client?.send({
-                    "@type": "logOut"
-                });
-                reloadClient()
+                // await client?.send({
+                //     "@type": "close"
+                // });
+                console.log("CLOSED");
+                await reloadClient()
 
-                onPhone()
+                // onPhone()
             }}>
                 Log with phone number
             </button>

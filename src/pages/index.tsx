@@ -11,7 +11,7 @@ import {useTdLib} from "@/shared/api";
 
 
 const Home: NextPage = () => {
-    const {client, event} = useTdLib();
+    const {client, event, reloadClient} = useTdLib();
 
 
     const [isLogWithPhone, setIsLogWithPhone] = useState(false);
@@ -25,10 +25,21 @@ const Home: NextPage = () => {
                     const authState = event["authorization_state"] as TdObject;
                     const type = authState["@type"];
 
+                    /* TODO:
+                        authorizationStateClosing
+                         authorizationStateWaitCode
+                          authorizationStateWaitPassword
+                           authorizationStateWaitRegistration, and authorizationStateWaitTdlibParameters.
+                    */
                     switch (type) {
                         case 'authorizationStateClosed':
-                            await client?.send({'@type': 'destroy'});
+                            console.log("START DESTR");
+                            // reloadClient();
+                            // await client?.send({'@type': 'destroy'}); // TODO: нужно?
+                            console.log("DESTROYED");
+
                             // window.location.reload(); // a kind of a 'hack' but it works...
+                            // console.log("-------------------------authorizationStateClosed -> destroy");
                             break;
                         case "authorizationStateWaitEncryptionKey":
                             console.log("checkDatabaseEncryptionKey send");
@@ -67,9 +78,6 @@ const Home: NextPage = () => {
             void handleAuth();
 
     }, [client, event]);
-
-
-
 
 
     if (event && event["@type"] === "updateAuthorizationState") {

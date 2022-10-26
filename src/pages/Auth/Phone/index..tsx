@@ -1,8 +1,8 @@
 import {useState} from "react";
 import {TdStates} from "@/constants";
 import TdClient, {TdObject} from "tdweb";
+import * as TD from "tdweb";
 import {useTdLib} from "@/shared/api";
-
 
 interface Props {
     event: TdObject;

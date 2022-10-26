@@ -76,9 +76,11 @@ const TelegramProvider = (props: Props) => {
         }
     }, [client]);
 
-    const reloadClient = () => {
+    const reloadClient =  useCallback(async () => {
         console.log('Initializing tdlib')
-        const client = new TdClient({
+        await client?.send({'@type': 'destroy'});
+
+        const clientd = new TdClient({
             // useTestDC: false,
             readOnly: false,
             // isBackground: true,
@@ -92,8 +94,8 @@ const TelegramProvider = (props: Props) => {
             onUpdate: onUpdate
         });
 
-        setClient(client);
-    }
+        setClient(clientd);
+    }, [client, onUpdate]);
 
     return (
         <TelegramContext.Provider value={{
