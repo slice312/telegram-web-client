@@ -20,12 +20,14 @@ export const Phone = ({event}: Props) => {
             <button type="button" onClick={() => {
                 console.log("PHONE esubmit", event);
 
-                debugger
                 if (event["@type"] === TdStates.Auth.updateAuthorizationState) {
                     const authState = event.authorization_state as TdObject;
                     const type = authState["@type"];
-                    if (authState && type === TdStates.Auth.updateAuthorizationState
+                    debugger
+                    if (authState && type === TdStates.Auth.authorizationStateWaitPhoneNumber
                         || type === TdStates.Auth.authorizationStateWaitOtherDeviceConfirmation) {
+                        debugger
+
                         client.send({
                             '@type': 'setAuthenticationPhoneNumber',
                             phone_number: text

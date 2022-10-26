@@ -6,6 +6,7 @@ import {QrCode} from "./Auth/QrCode";
 import {Phone} from "./Auth/Phone/index.";
 
 import {useTdLib} from "@/shared/api";
+import {TdStates} from "@/constants";
 
 // import tg_logo from "/assets/tg_logo.png"
 
@@ -91,7 +92,7 @@ const Home: NextPage = () => {
                 onPhone={() => {
                     setIsLogWithPhone(true);
                 }}/>
-        else if (type === "authorizationStateWaitOtherDeviceConfirmation" && isLogWithPhone)
+        else if (type === TdStates.Auth.authorizationStateWaitPhoneNumber && isLogWithPhone)
             return <Phone event={event}/>
     }
 

@@ -80,7 +80,7 @@ export const QrCode = ({link, onPhone}: Props) => {
                 console.log("CLOSED");
                 await reloadClient()
 
-                // onPhone()
+                onPhone()
             }}>
                 Log with phone number
             </button>
