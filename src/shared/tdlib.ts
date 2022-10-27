@@ -1,46 +1,16 @@
 import {EventEmitter} from "fbemitter"
-import TdClient, {TdOptions} from "tdweb";
+import TdClient, {TdObject, TdOptions} from "tdweb";
 
 
-export class Builder{
-    public static build (options: TdOptions) {
+class TdLibController extends EventEmitter {
+    private client: TdClient;
+    private readonly parameters: TdOptions;
 
-    }
-
-    const clientd = new TdClient({
-        // useTestDC: false,
-        readOnly: false,
-        // isBackground: true,
-        // logVerbosityLevel: 3,
-        // verbosity: 3,
-        // jsVerbosity: 3,
-        // fastUpdating: true,
-        // jsLogVerbosityLevel: "warning",
-        useDatabase: false,
-        mode: 'wasm',
-        // onUpdate: onUpdate
-    });
-}
-
-
-export class TdLibController extends EventEmitter {
-
-    private readonly parameters: object;
-    private readonly client: TdClient;
-
-    constructor(client: TdClient) {
+    constructor() {
         super();
+        console.log("TdLibController Created");
 
-
-        this.client = client
-        this.parameters = {};
-    }
-
-    public init() {
-        // await client?.send({'@type': 'destroy'});
-
-        const clientd = new TdClient({
-            // useTestDC: false,
+        this.parameters = {
             readOnly: false,
             // isBackground: true,
             // logVerbosityLevel: 3,
@@ -50,12 +20,53 @@ export class TdLibController extends EventEmitter {
             // jsLogVerbosityLevel: "warning",
             useDatabase: false,
             mode: 'wasm',
-            onUpdate: onUpdate
-        });
+            onUpdate: this.onUpdate
+        };
+
+        this.client = new TdClient(this.parameters);
+
+        this.setTdParameters();
+    }
+
+    private setTdParameters() {
+        if (this.client) {
+            console.log('setTdlibParameters')
+            void this.client.send({
+                "@type": "setTdlibParameters",
+                parameters: {
+                    '@type': 'tdParameters',
+                    use_test_dc: false,
+                    api_id: process.env.NEXT_PUBLIC_APP_APP_ID,
+                    api_hash: process.env.NEXT_PUBLIC_APP_HASH_ID,
+                    system_language_code: navigator.language || 'en',
+                    device_model: 'Telegram Web Client',
+                    application_version: '0.1',
+                    use_secret_chats: false,
+                    use_message_database: true,
+                    use_file_database: true,
+                    files_directory: '/'
+                }
+            })
+        }
+    }
+
+
+    public async reloadClient() {
+        await this.client?.send({'@type': 'destroy'});
+        this.client = new TdClient(this.parameters);
+    }
+
+
+    private onUpdate(update: TdObject) {
+        this.emit("update", update);
     }
 
     public send() {
 
     }
-
 }
+
+const tdLibController = new TdLibController();
+// @ts-ignore
+window.controller = tdLibController; // TODO: убрать
+export {tdLibController};

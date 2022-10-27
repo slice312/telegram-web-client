@@ -20,6 +20,9 @@ const path = require("path");
 const nextConfig = {
     reactStrictMode: false,
     swcMinify: true,
+    compiler: {
+        styledComponents: true
+    },
     // sassOptions: {
     //     includePaths: [path.resolve(__dirname, 'src/styles')],
     // },
