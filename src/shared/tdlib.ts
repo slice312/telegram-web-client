@@ -66,7 +66,7 @@ class TdLibController extends EventEmitter {
     }
 }
 
-// const tdLibController = new TdLibController();
+const tdLibController = new TdLibController();
 // @ts-ignore
-// window.controller = tdLibController; // TODO: убрать
-// export {tdLibController};
+window.controller = tdLibController; // TODO: убрать
+export {tdLibController};

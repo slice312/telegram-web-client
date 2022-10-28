@@ -1,10 +1,11 @@
-import styles from '../styles/Home.module.css'
 import {useCallback, useEffect, useRef, useState} from "react";
 import TdClient, {TdObject} from "tdweb"
 import {QrCode} from "@/pages/Auth/QrCode";
 import {Phone} from "@/pages/Auth/Phone/index.";
 
 import {TdStates} from "@/constants";
+
+import "./styles/null.css";
 
 
 
@@ -101,7 +102,7 @@ export const App = () => {
     }
 
     return (
-        <div className={styles.container}>
+        <div>
             <h1>Lol Kek</h1>
             <button type="button" onClick={() => {
                 client?.send({

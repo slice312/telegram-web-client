@@ -27,14 +27,14 @@
     "tdweb": "1.8.0"
   },
   "devDependencies": {
-    "@types/fbemitter": "^2.0.32",
+    "@types/fbemitter": "2.0.32",
     "@types/lodash": "4.14.186",
     "@types/node": "18.11.7",
     "@types/react": "18.0.22",
     "@types/react-dom": "18.0.7",
     "@types/storejs": "2.0.3",
-    "@types/tdweb": "^1.4.2",
-    "@typescript-eslint/parser": "^5.41.0",
+    "@types/tdweb": "1.4.2",
+    "@typescript-eslint/parser": "5.41.0",
     "@vitejs/plugin-react": "2.2.0",
     "eslint": "8.26.0",
     "eslint-plugin-import": "2.26.0",
