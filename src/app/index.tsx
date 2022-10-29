@@ -5,7 +5,7 @@ import {Phone} from "@/pages/Auth/Phone/index.";
 
 import {TdStates} from "@/constants";
 
-import "./styles/index.scss";
+import "./styles/index.css";
 
 
 
