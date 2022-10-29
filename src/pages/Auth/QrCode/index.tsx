@@ -14,7 +14,8 @@ interface Props {
 
 export const QrCode = ({link, onPhone}: Props) => {
 
-    const {client, reloadClient} = useTdLib();
+    console.log("QrCode", link);
+    // const {client, reloadClient} = useTdLib();
 
     const qr = useRef<HTMLDivElement>(null);
 
@@ -47,16 +48,16 @@ export const QrCode = ({link, onPhone}: Props) => {
             qr.current.innerHTML = "";
             qrCode.append(qr.current);
         }
-    }, []);
+    }, [link]);
 
     return (
         <div>
             <h1>Qr Code</h1>
             <div ref={qr}></div>
             <button type="button" onClick={() => {
-                client?.send({
-                    "@type": "logOut"
-                });
+                // client?.send({
+                //     "@type": "logOut"
+                // });
             }}>
                 Log out
             </button>
@@ -65,7 +66,7 @@ export const QrCode = ({link, onPhone}: Props) => {
                 //     "@type": "close"
                 // });
                 console.log("CLOSED");
-                await reloadClient();
+                // await reloadClient();
 
                 onPhone();
             }}>

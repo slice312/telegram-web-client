@@ -1,4 +1,4 @@
-import {EventEmitter} from "fbemitter";
+import {EventEmitter, EventSubscription} from "fbemitter";
 import TdClient, {TdObject, TdOptions} from "tdweb";
 
 
@@ -8,7 +8,7 @@ class TdLibController extends EventEmitter {
 
     constructor() {
         super();
-        console.log("TdLibController Created");
+        console.log("TdLibController Created")
 
         this.parameters = {
             readOnly: false,
@@ -24,7 +24,6 @@ class TdLibController extends EventEmitter {
         };
 
         this.client = new TdClient(this.parameters);
-
         this.setTdParameters();
     }
 
@@ -36,8 +35,8 @@ class TdLibController extends EventEmitter {
                 parameters: {
                     "@type": "tdParameters",
                     use_test_dc: false,
-                    api_id: process.env.NEXT_PUBLIC_APP_APP_ID,
-                    api_hash: process.env.NEXT_PUBLIC_APP_HASH_ID,
+                    api_id: import.meta.env.VITE_PUBLIC_APP_APP_ID,
+                    api_hash: import.meta.env.VITE_PUBLIC_APP_HASH_ID,
                     system_language_code: navigator.language || "en",
                     device_model: "Telegram Web Client",
                     application_version: "0.1",
@@ -57,13 +56,21 @@ class TdLibController extends EventEmitter {
     }
 
 
-    private onUpdate(update: TdObject) {
+    // public addListener(eventType: string, callback: (update: TdObject) => void): EventSubscription {
+    //     return this.emitter.addListener(eventType, callback);
+    // }
+
+    private readonly onUpdate = (update: TdObject) => {
+        console.log("UPDATE,", update);
+        // console.log("EMITTER", this.emitter);
         this.emit("update", update);
-    }
+        // super.emit("update", update);
+    };
 
-    public send() {
 
-    }
+    public readonly send = async (query: TdObject) => {
+        await this.client.send(query);
+    };
 }
 
 const tdLibController = new TdLibController();
