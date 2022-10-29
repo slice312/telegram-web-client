@@ -1,4 +1,4 @@
-module.exports = {
+    module.exports = {
     parser: "@typescript-eslint/parser",
     parserOptions: {
         sourceType: "module",
@@ -11,10 +11,11 @@ module.exports = {
     },
     plugins: ["import", "react", "@typescript-eslint"],
     ignorePatterns: [
-        "node_modules/*",
-        "src/assets/**",
-        "build/**",
-        "dist/**",
+        "node_modules/",
+        "public",
+        "src/assets/",
+        "build/",
+        "dist/",
         "@types/assets/index.d.ts"
     ],
     rules: {

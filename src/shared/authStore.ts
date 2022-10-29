@@ -1,6 +1,7 @@
 // import {tdLibController} from "@/shared/tdlib";
 import {EventSubscription} from "fbemitter";
 
+
 export class AuthStore {
     private subscriptions: EventSubscription[];
 

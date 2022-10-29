@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useRef, useState} from "react";
-import TdClient, {TdObject} from "tdweb"
+import TdClient, {TdObject} from "tdweb";
 import {QrCode} from "@/pages/Auth/QrCode";
 import {Phone} from "@/pages/Auth/Phone/index.";
 
@@ -26,7 +26,7 @@ export const App = () => {
     useEffect(() => {
         const handleAuth = async () => {
             try {
-                if (event["@type"] === "updateAuthorizationState") {
+                if (event?.["@type"] === "updateAuthorizationState") {
                     const authState = event["authorization_state"] as TdObject;
                     const type = authState["@type"];
 
@@ -37,7 +37,7 @@ export const App = () => {
                            authorizationStateWaitRegistration, and authorizationStateWaitTdlibParameters.
                     */
                     switch (type) {
-                        case 'authorizationStateClosed':
+                        case "authorizationStateClosed":
                             console.log("START DESTR");
                             // reloadClient();
                             // await client?.send({'@type': 'destroy'}); // TODO: нужно?
@@ -49,21 +49,21 @@ export const App = () => {
                         case "authorizationStateWaitEncryptionKey":
                             console.log("checkDatabaseEncryptionKey send");
                             await client?.send({
-                                '@type': 'checkDatabaseEncryptionKey'
-                            })
+                                "@type": "checkDatabaseEncryptionKey"
+                            });
                             console.log("checkDatabaseEncryptionKey SUCCESS");
 
                             break;
-                        case 'authorizationStateWaitPhoneNumber':
+                        case "authorizationStateWaitPhoneNumber":
                             if (!isLogWithPhone) {
                                 await client?.send({
-                                    '@type': 'requestQrCodeAuthentication',
+                                    "@type": "requestQrCodeAuthentication",
                                     other_user_ids: []
                                 });
                                 console.log("SEND");
                             }
                             break;
-                        case 'authorizationStateWaitOtherDeviceConfirmation':
+                        case "authorizationStateWaitOtherDeviceConfirmation":
                             break;
                         case "authorizationStateReady":
                             // TODO: тут че
@@ -75,7 +75,7 @@ export const App = () => {
                 }
             } catch (err) {
                 console.log(err);
-                debugger
+                debugger;
             }
         };
 
@@ -90,14 +90,16 @@ export const App = () => {
         const type = authState["@type"];
 
 
-        if (type === "authorizationStateWaitOtherDeviceConfirmation" && !isLogWithPhone)
+        if (type === "authorizationStateWaitOtherDeviceConfirmation" && !isLogWithPhone) {
             return <QrCode
-                link={event.authorization_state.link}
+                /* @ts-ignore */
+                link={event?.authorization_state?.link}
                 onPhone={() => {
                     setIsLogWithPhone(true);
-                }}/>
-        else if (type === TdStates.Auth.authorizationStateWaitPhoneNumber && isLogWithPhone)
-            return <Phone event={event}/>
+                }}/>;
+        }
+        if (type === TdStates.Auth.authorizationStateWaitPhoneNumber && isLogWithPhone)
+            return <Phone event={event}/>;
 
     }
 
@@ -117,5 +119,5 @@ export const App = () => {
                 Log with phone number
             </button>
         </div>
-    )
+    );
 };

@@ -7,8 +7,8 @@ export const TdStates = {
 };
 
 enum AuthState {
-    updateAuthorizationState = 'updateAuthorizationState',
-    authorizationStateWaitOtherDeviceConfirmation = 'authorizationStateWaitOtherDeviceConfirmation'
+    updateAuthorizationState = "updateAuthorizationState",
+    authorizationStateWaitOtherDeviceConfirmation = "authorizationStateWaitOtherDeviceConfirmation"
 }
 
 //

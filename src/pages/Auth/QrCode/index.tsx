@@ -5,14 +5,10 @@ import telegramLogo from "@/assets/images/telegram-logo.png";
 import {useTdLib} from "@/shared/api";
 
 
-function QR(mydata) {
-    const qrCode = new QRCodeStyling(mydata)
-    return qrCode
-}
-
 
 interface Props {
-    link: string;
+    link?: string;
+    onPhone: () => void;
 }
 
 
@@ -24,12 +20,12 @@ export const QrCode = ({link, onPhone}: Props) => {
 
 
     useEffect(() => {
-        const options = {
+        const qrCode = new QRCodeStyling({
             width: 300,
             height: 300,
             data: link,
             margin: 0,
-            image: telegramLogo.src,
+            image: telegramLogo,
             qrOptions: {
                 typeNumber: 0,
                 mode: "Byte",
@@ -42,18 +38,13 @@ export const QrCode = ({link, onPhone}: Props) => {
             },
             dotsOptions: {
                 type: "square",
-                color: "#0b0a0a",
-                gradient: null
+                color: "#0b0a0a"
             },
             backgroundOptions: {color: "#ffffff"},
-        }
-
-
-        const qrCode = QR(options);
-
+        });
 
         if (qr.current) {
-            qr.current.innerHTML = '';
+            qr.current.innerHTML = "";
             qrCode.append(qr.current);
         }
     }, []);
@@ -74,9 +65,9 @@ export const QrCode = ({link, onPhone}: Props) => {
                 //     "@type": "close"
                 // });
                 console.log("CLOSED");
-                await reloadClient()
+                await reloadClient();
 
-                onPhone()
+                onPhone();
             }}>
                 Log with phone number
             </button>

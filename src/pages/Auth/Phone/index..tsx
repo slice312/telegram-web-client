@@ -4,6 +4,7 @@ import TdClient, {TdObject} from "tdweb";
 import * as TD from "tdweb";
 import {useTdLib} from "@/shared/api";
 
+
 interface Props {
     event: TdObject;
 }
@@ -23,13 +24,13 @@ export const Phone = ({event}: Props) => {
                 if (event["@type"] === TdStates.Auth.updateAuthorizationState) {
                     const authState = event.authorization_state as TdObject;
                     const type = authState["@type"];
-                    debugger
+                    debugger;
                     if (authState && type === TdStates.Auth.authorizationStateWaitPhoneNumber
                         || type === TdStates.Auth.authorizationStateWaitOtherDeviceConfirmation) {
-                        debugger
+                        debugger;
 
-                        client.send({
-                            '@type': 'setAuthenticationPhoneNumber',
+                        client?.send({
+                            "@type": "setAuthenticationPhoneNumber",
                             phone_number: text
                         })
                             .then(result => {
@@ -59,5 +60,5 @@ export const Phone = ({event}: Props) => {
             </button>
 
         </div>
-    )
-}
+    );
+};
