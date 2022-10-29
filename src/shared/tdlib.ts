@@ -1,5 +1,6 @@
 import {EventEmitter} from "fbemitter"
 import TdClient, {TdObject, TdOptions} from "tdweb";
+import
 
 
 class TdLibController extends EventEmitter {
