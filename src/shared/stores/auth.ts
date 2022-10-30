@@ -11,7 +11,9 @@ import {TdMethods} from "./tdMethods";
 interface AuthState {
     type: string;
     isLoginByPhoneNumber: boolean;
+    isWaitConfirmationCode: boolean;
     qrCodeLink: string;
+    isAuthenticated: boolean;
 }
 
 
@@ -20,7 +22,9 @@ export const authAtom = atom<AuthState>({
     default: {
         type: "",
         isLoginByPhoneNumber: false,
-        qrCodeLink: ""
+        isWaitConfirmationCode: false,
+        qrCodeLink: "",
+        isAuthenticated: false
     }
 });
 
@@ -43,7 +47,9 @@ class AuthStore {
     public async onUpdate(update: TdObject) {
         const type = update["@type"];
         if (type !== "updateAuthorizationState")
-            return;
+            return
+
+        // console.log("AuthStore", update);
 
         const value = getRecoil(authAtom);
 
@@ -67,6 +73,12 @@ class AuthStore {
                         other_user_ids: []
                     });
                 }
+                break;
+            case TdAuthState.authorizationStateWaitCode:
+                setRecoil(authAtom, prev => ({
+                    ...prev,
+                    isWaitConfirmationCode: true,
+                }));
                 break;
             case TdAuthState.authorizationStateWaitOtherDeviceConfirmation:
                 setRecoil(authAtom, {

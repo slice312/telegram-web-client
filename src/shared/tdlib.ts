@@ -1,5 +1,6 @@
 import {EventEmitter, EventSubscription} from "fbemitter";
 import TdClient, {TdObject, TdOptions} from "tdweb";
+import {TdMethods} from "@/shared/stores/tdMethods";
 
 
 class TdLibController extends EventEmitter {
@@ -53,6 +54,10 @@ class TdLibController extends EventEmitter {
     public async reloadClient() {
         await this.client?.send({"@type": "destroy"});
         this.client = new TdClient(this.parameters);
+        this.setTdParameters();
+        await this.client.send({
+            "@type": TdMethods.checkDatabaseEncryptionKey
+        });
     }
 
 

@@ -4,5 +4,6 @@ export const enum TdAuthState {
     authorizationStateWaitEncryptionKey = "authorizationStateWaitEncryptionKey",
     authorizationStateWaitOtherDeviceConfirmation = "authorizationStateWaitOtherDeviceConfirmation",
     authorizationStateWaitPhoneNumber = "authorizationStateWaitPhoneNumber",
+    authorizationStateWaitCode = "authorizationStateWaitCode",
     authorizationStateReady = "authorizationStateReady"
 }

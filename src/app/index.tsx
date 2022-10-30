@@ -16,8 +16,18 @@ import {authAtom, authStore} from "@/shared/stores/auth";
 
 import {useRecoilValue} from "recoil";
 import {EventSubscription} from "fbemitter";
+import styled from "@emotion/styled";
+import {Typography} from "@mui/material";
 
 // import tg_logo from "/assets/tg_logo.png"
+
+
+const ReadyComponent = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+`;
 
 
 export const App = () => {
@@ -117,6 +127,17 @@ export const App = () => {
     //         return <Phone event={event}/>;
     //
     // }
+
+
+    if (authState.isAuthenticated) {
+        return (
+            <ReadyComponent>
+                <Typography>
+                    Chats
+                </Typography>
+            </ReadyComponent>
+        );
+    }
 
     if (authState.isLoginByPhoneNumber)
         return <Phone/>;
