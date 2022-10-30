@@ -14,7 +14,11 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "1.8.6",
+    "@emotion/react": "11.10.5",
+    "@emotion/styled": "11.10.5",
+    "@fontsource/roboto": "4.5.8",
+    "@mui/icons-material": "5.10.9",
+    "@mui/material": "5.10.11",
     "dayjs": "1.11.6",
     "fbemitter": "3.0.0",
     "lodash": "4.17.21",
@@ -22,9 +26,8 @@
     "react": "18.2.0",
     "react-content-loader": "6.2.0",
     "react-dom": "18.2.0",
-    "react-redux": "8.0.4",
     "recoil": "0.7.6",
-    "recoil-nexus": "^0.4.0",
+    "recoil-nexus": "0.4.0",
     "store": "2.0.12",
     "tdweb": "1.8.0"
   },

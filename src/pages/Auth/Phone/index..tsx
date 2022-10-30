@@ -1,8 +1,6 @@
 import {useState} from "react";
-import {TdStates} from "@/constants";
 import TdClient, {TdObject} from "tdweb";
-import * as TD from "tdweb";
-import {useTdLib} from "@/shared/api";
+import {authStore} from "@/shared/stores/auth";
 
 
 interface Props {
@@ -10,7 +8,8 @@ interface Props {
 }
 
 export const Phone = ({event}: Props) => {
-    const {client} = useTdLib();
+    // const {client} = useTdLib();
+
 
     const [text, setText] = useState("");
 
@@ -18,29 +17,17 @@ export const Phone = ({event}: Props) => {
         <div>
             <h1>Phone</h1>
             <input type="text" value={text} onChange={e => setText(e.target.value)}/>
-            <button type="button" onClick={() => {
+            <button type="button" onClick={async () => {
                 console.log("PHONE esubmit", event);
+                authStore.authByPhone(text)
 
-                if (event["@type"] === TdStates.Auth.updateAuthorizationState) {
-                    const authState = event.authorization_state as TdObject;
-                    const type = authState["@type"];
-                    debugger;
-                    if (authState && type === TdStates.Auth.authorizationStateWaitPhoneNumber
-                        || type === TdStates.Auth.authorizationStateWaitOtherDeviceConfirmation) {
-                        debugger;
 
-                        client?.send({
-                            "@type": "setAuthenticationPhoneNumber",
-                            phone_number: text
-                        })
-                            .then(result => {
-                                console.log("ACCEPTED PHONE");
-                            })
-                            .catch(error => {
-                                console.log(error);
-                            });
-                    }
-                }
+                    .then(result => {
+                        console.log("ACCEPTED PHONE");
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
 
                 // if (
                 //     this.authorizationState &&
@@ -60,5 +47,6 @@ export const Phone = ({event}: Props) => {
             </button>
 
         </div>
-    );
+    )
+        ;
 };

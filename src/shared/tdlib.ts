@@ -8,7 +8,7 @@ class TdLibController extends EventEmitter {
 
     constructor() {
         super();
-        console.log("TdLibController Created")
+        console.log("TdLibController Created");
 
         this.parameters = {
             readOnly: false,

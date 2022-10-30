@@ -1,19 +1,34 @@
 import {useEffect, useRef} from "react";
+import {Button, Typography} from "@mui/material";
 
 import QRCodeStyling from "qr-code-styling";
 import telegramLogo from "@/assets/images/telegram-logo.png";
-import {useTdLib} from "@/shared/api";
 
+
+import {authAtom, authStore} from "@/shared/stores/auth";
+import {useRecoilValue} from "recoil";
+import styled from "@emotion/styled";
 
 
 interface Props {
-    link?: string;
     onPhone: () => void;
 }
 
 
-export const QrCode = ({link, onPhone}: Props) => {
 
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 25px;
+    gap: 25px;
+`;
+
+
+export const QrCode = ({onPhone}: Props) => {
+    const link = useRecoilValue(authAtom).qrCodeLink;
     console.log("QrCode", link);
     // const {client, reloadClient} = useTdLib();
 
@@ -51,27 +66,21 @@ export const QrCode = ({link, onPhone}: Props) => {
     }, [link]);
 
     return (
-        <div>
-            <h1>Qr Code</h1>
+        <Container>
+            <Typography variant="h3" component="h2">
+                Qr Code
+            </Typography>
             <div ref={qr}></div>
-            <button type="button" onClick={() => {
-                // client?.send({
-                //     "@type": "logOut"
-                // });
-            }}>
-                Log out
-            </button>
-            <button type="button" onClick={async () => {
-                // await client?.send({
-                //     "@type": "close"
-                // });
-                console.log("CLOSED");
-                // await reloadClient();
-
-                onPhone();
+            <Typography>
+                1. Open exteraGram or any other client on your phone <br/>
+                2. Go to Settings > Devices > Scan QR <br/>
+                3. Scan this image to Log in
+            </Typography>
+            <Button variant="text"  onClick={() => {
+                void authStore.setToPhone();
             }}>
                 Log with phone number
-            </button>
-        </div>
+            </Button>
+        </Container>
     );
 };

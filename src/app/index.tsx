@@ -3,14 +3,16 @@ import TdClient, {TdObject} from "tdweb";
 import {QrCode} from "@/pages/Auth/QrCode";
 import {Phone} from "@/pages/Auth/Phone/index.";
 
-import {TdStates} from "@/constants";
 
 import {tdLibController} from "@/shared/tdlib";
 
 import "./styles/index.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
-
-import {authStoreAtom, authStore} from "@/shared/stores/auth";
+import {authAtom, authStore} from "@/shared/stores/auth";
 
 import {useRecoilValue} from "recoil";
 import {EventSubscription} from "fbemitter";
@@ -30,7 +32,7 @@ export const App = () => {
         };
     }, []);
 
-    const authState = useRecoilValue(authStoreAtom);
+    const authState = useRecoilValue(authAtom);
 
     // const [isLogWithPhone, setIsLogWithPhone] = useState(false);
     //
@@ -117,9 +119,8 @@ export const App = () => {
     // }
 
     if (authState.isLoginByPhoneNumber)
-        return <Phone/>
-    else
-        return <QrCode link={authState.qrCodeLink}/>
+        return <Phone/>;
+    return <QrCode/>;
 
 
     return (

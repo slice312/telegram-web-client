@@ -1,8 +1,12 @@
 import {atom, useRecoilState} from "recoil";
 import {EventSubscription} from "fbemitter";
-import {TdObject} from "tdweb";
+import TdClient, {TdObject} from "tdweb";
 import {getRecoil, setRecoil} from "recoil-nexus";
 import {tdLibController} from "@/shared/tdlib";
+
+import {TdAuthState} from "./tdStates";
+import {TdMethods} from "./tdMethods";
+
 
 interface AuthState {
     type: string;
@@ -11,8 +15,8 @@ interface AuthState {
 }
 
 
-export const authStoreAtom = atom<AuthState>({
-    key: "auth-store",
+export const authAtom = atom<AuthState>({
+    key: "auth-atom2",
     default: {
         type: "",
         isLoginByPhoneNumber: false,
@@ -41,47 +45,37 @@ class AuthStore {
         if (type !== "updateAuthorizationState")
             return;
 
+        const value = getRecoil(authAtom);
+
         const authState = update.authorization_state as AsState;
 
         switch (authState["@type"]) {
-            case "authorizationStateClosed":
+            case TdAuthState.authorizationStateClosed:
                 console.log("START DESTR");
                 // reloadClient();
                 // await client?.send({'@type': 'destroy'}); // TODO: нужно?
-                console.log("DESTROYED");
-
-                // window.location.reload(); // a kind of a 'hack' but it works...
-                // console.log("-------------------------authorizationStateClosed -> destroy");
                 break;
-            case "authorizationStateWaitEncryptionKey":
-                console.log("checkDatabaseEncryptionKey send");
+            case TdAuthState.authorizationStateWaitEncryptionKey:
                 await tdLibController.send({
-                    "@type": "checkDatabaseEncryptionKey"
+                    "@type": TdMethods.checkDatabaseEncryptionKey
                 });
-                console.log("checkDatabaseEncryptionKey SUCCESS");
-
                 break;
-            case "authorizationStateWaitPhoneNumber":
-                await tdLibController.send({
-                    "@type": "requestQrCodeAuthentication",
-                    other_user_ids: []
-                });
-                //     if (!isLogWithPhone) {
-                //         await client?.send({
-
-                //         });
-                //         console.log("SEND");
-                //     }
+            case TdAuthState.authorizationStateWaitPhoneNumber:
+                if (!value.isLoginByPhoneNumber) {
+                    await tdLibController.send({
+                        "@type": TdMethods.requestQrCodeAuthentication,
+                        other_user_ids: []
+                    });
+                }
                 break;
-            case "authorizationStateWaitOtherDeviceConfirmation":
-                const value = getRecoil(authStoreAtom);
-                setRecoil(authStoreAtom, {
+            case TdAuthState.authorizationStateWaitOtherDeviceConfirmation:
+                setRecoil(authAtom, {
                     ...value,
                     isLoginByPhoneNumber: false,
                     qrCodeLink: authState?.link || ""
                 });
                 break;
-            case "authorizationStateReady":
+            case TdAuthState.authorizationStateReady:
                 // TODO: тут че
                 break;
             default:
@@ -89,8 +83,24 @@ class AuthStore {
 
         console.log("AuthStore", update);
         // debugger
-        // setRecoil(authStoreAtom, {type: ""});
+        // setRecoil(authAtom, {type: ""});
 
+    }
+
+    public async setToPhone() {
+        setRecoil(authAtom, currVal => ({
+            ...currVal,
+            isLoginByPhoneNumber: true
+        }));
+
+        await tdLibController.reloadClient();
+    }
+
+    public async authByPhone(phone: string) {
+        return await tdLibController.send({
+            "@type": TdMethods.setAuthenticationPhoneNumber,
+            phone_number: phone
+        });
     }
 }
 
