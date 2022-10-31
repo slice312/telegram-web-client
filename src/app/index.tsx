@@ -17,7 +17,10 @@ import {authAtom, authStore} from "@/shared/stores/auth";
 import {useRecoilValue} from "recoil";
 import {EventSubscription} from "fbemitter";
 import styled from "@emotion/styled";
-import {Typography} from "@mui/material";
+import {Paper, ThemeProvider, Typography} from "@mui/material";
+import {lightTheme} from "@/themes/lightTheme";
+import {darkTheme} from "@/themes/darkTheme";
+import {ChatsBar} from "@/components/chatsBar/ChatsBar";
 
 // import tg_logo from "/assets/tg_logo.png"
 
@@ -129,36 +132,42 @@ export const App = () => {
     // }
 
 
-    if (authState.isAuthenticated) {
-        return (
-            <ReadyComponent>
-                <Typography>
-                    Chats
-                </Typography>
-            </ReadyComponent>
-        );
-    }
+    // if (authState.isAuthenticated) {
+    //     return (
+    //         <ReadyComponent>
+    //             <Typography>
+    //                 Chats
+    //             </Typography>
+    //         </ReadyComponent>
+    //     );
+    // }
+    //
+    // if (authState.isLoginByPhoneNumber)
+    //     return <Phone/>;
+    // return <QrCode/>;
 
-    if (authState.isLoginByPhoneNumber)
-        return <Phone/>;
-    return <QrCode/>;
-
-
+    const [darkMode, setDarkMode] = useState<boolean>(false);
     return (
         <div>
-            <h1>Lol Kek</h1>
-            <button type="button" onClick={() => {
-                client?.send({
-                    "@type": "logOut"
-                });
-            }}>
-                Log out
-            </button>
+            {/*<h1>Lol Kek</h1>*/}
+            {/*<button type="button" onClick={() => {*/}
+            {/*    client?.send({*/}
+            {/*        "@type": "logOut"*/}
+            {/*    });*/}
+            {/*}}>*/}
+            {/*    Log out*/}
+            {/*</button>*/}
 
-            <button type="button" onClick={() => {
-            }}>
-                Log with phone number
-            </button>
+            {/*<button type="button" onClick={() => {*/}
+            {/*}}>*/}
+            {/*    Log with phone number*/}
+            {/*</button>*/}
+            <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+                <Paper elevation={0} square>
+                    <ChatsBar darkMode={darkMode} setDarkMode={setDarkMode}/>
+                </Paper>
+            </ThemeProvider>
+
         </div>
     );
 };
