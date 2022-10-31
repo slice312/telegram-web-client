@@ -1,5 +1,5 @@
 import {useState, useCallback, ReactNode} from "react";
-import {ThemeProvider} from "@mui/material";
+import {ThemeProvider, useMediaQuery} from "@mui/material";
 
 import {AppThemeContext} from "./context";
 import {darkTheme} from "./themes/darkTheme";
@@ -12,7 +12,8 @@ interface Props {
 
 
 export const AppThemeProvider = (props: Props) => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+    const [isDarkMode, setIsDarkMode] = useState(prefersDarkMode);
 
     const setMode = useCallback((isDark: boolean) => {
         setIsDarkMode(isDark);
