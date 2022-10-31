@@ -3,17 +3,17 @@ import {Box, AppBar, IconButton, Toolbar, Button, Typography} from "@mui/materia
 import MenuIcon from "@mui/icons-material/Menu";
 import styled from "@emotion/styled";
 
+import {useAppTheme} from "@/shared/ui/themeProvider";
 
-interface Props {
-    darkMode: boolean;
-    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-export const ChatsBar = ({darkMode, setDarkMode}: Props) => {
+
+export const ChatsBar = () => {
+    const {isDarkMode, setMode} = useAppTheme();
+
     return (
         <Wrapper>
             <Box sx={{flexGrow: 1}}>
@@ -26,7 +26,7 @@ export const ChatsBar = ({darkMode, setDarkMode}: Props) => {
                             aria-label="menu"
                             sx={{mr: 2}}
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                             News
@@ -41,7 +41,7 @@ export const ChatsBar = ({darkMode, setDarkMode}: Props) => {
             <Button
                 variant={"contained"}
                 onClick={() => {
-                    setDarkMode(!darkMode);
+                    setMode(!isDarkMode);
                 }}
             >
                 estebes

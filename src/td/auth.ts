@@ -1,32 +1,12 @@
-import {atom, useRecoilState} from "recoil";
-import {EventSubscription} from "fbemitter";
-import TdClient, {TdObject} from "tdweb";
-import {getRecoil, setRecoil} from "recoil-nexus";
+import {TdObject} from "tdweb";
 import {tdLibController} from "@/shared/tdlib";
 
 import {TdAuthState} from "./tdStates";
 import {TdMethods} from "./tdMethods";
+import {store, slices} from "@/store";
 
 
-interface AuthState {
-    type: string;
-    isLoginByPhoneNumber: boolean;
-    isWaitConfirmationCode: boolean;
-    qrCodeLink: string;
-    isAuthenticated: boolean;
-}
-
-
-export const authAtom = atom<AuthState>({
-    key: "auth-atom2",
-    default: {
-        type: "",
-        isLoginByPhoneNumber: false,
-        isWaitConfirmationCode: false,
-        qrCodeLink: "",
-        isAuthenticated: false
-    }
-});
+const authSlice = slices.authSlice;
 
 
 interface AsState {
@@ -35,11 +15,7 @@ interface AsState {
 }
 
 
-// import {tdLibController} from "@/shared/tdlib";
-
-
 class AuthStore {
-
     constructor() {
     }
 
@@ -47,11 +23,10 @@ class AuthStore {
     public async onUpdate(update: TdObject) {
         const type = update["@type"];
         if (type !== "updateAuthorizationState")
-            return
+            return;
 
-        // console.log("AuthStore", update);
 
-        const value = getRecoil(authAtom);
+        const auth = store.getState().auth;
 
         const authState = update.authorization_state as AsState;
 
@@ -67,7 +42,7 @@ class AuthStore {
                 });
                 break;
             case TdAuthState.authorizationStateWaitPhoneNumber:
-                if (!value.isLoginByPhoneNumber) {
+                if (!auth.isLoginByPhoneNumber) {
                     await tdLibController.send({
                         "@type": TdMethods.requestQrCodeAuthentication,
                         other_user_ids: []
@@ -75,17 +50,10 @@ class AuthStore {
                 }
                 break;
             case TdAuthState.authorizationStateWaitCode:
-                setRecoil(authAtom, prev => ({
-                    ...prev,
-                    isWaitConfirmationCode: true,
-                }));
+                store.dispatch(authSlice.actions.waitConfirmationCode());
                 break;
             case TdAuthState.authorizationStateWaitOtherDeviceConfirmation:
-                setRecoil(authAtom, {
-                    ...value,
-                    isLoginByPhoneNumber: false,
-                    qrCodeLink: authState?.link || ""
-                });
+                store.dispatch(authSlice.actions.waitQrCodeConfirmation(authState?.link || ""));
                 break;
             case TdAuthState.authorizationStateReady:
                 // TODO: тут че
@@ -94,17 +62,11 @@ class AuthStore {
         }
 
         console.log("AuthStore", update);
-        // debugger
-        // setRecoil(authAtom, {type: ""});
 
     }
 
     public async setToPhone() {
-        setRecoil(authAtom, currVal => ({
-            ...currVal,
-            isLoginByPhoneNumber: true
-        }));
-
+        store.dispatch(authSlice.actions.waitPhone());
         await tdLibController.reloadClient();
     }
 
