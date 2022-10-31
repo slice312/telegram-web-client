@@ -1,7 +1,8 @@
-import styled from "@emotion/styled";
-import {Button, TextField, Typography} from "@mui/material";
 import {useState} from "react";
-import {authStore} from "@/shared/stores/auth";
+import {Button, TextField, Typography} from "@mui/material";
+import styled from "@emotion/styled";
+
+import {authStore} from "@/td/auth";
 
 
 const Form = styled.form`

@@ -1,25 +1,17 @@
-import {useCallback, useEffect, useRef, useState} from "react";
-import TdClient, {TdObject} from "tdweb";
-import {QrCode} from "@/pages/Auth/QrCode";
-import {Phone} from "@/pages/Auth/Phone/index.";
+import {useEffect} from "react";
+import {QrCode} from "./qrCode/QrCode";
+import {Phone} from "./phone/Phone";
+
+import {useAppSelector} from "@/store";
 
 
 import {tdLibController} from "@/shared/tdlib";
 
-import "./styles/index.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import {authStore} from "@/td/auth";
 
-import {authAtom, authStore} from "@/shared/stores/auth";
-
-import {useRecoilValue} from "recoil";
 import {EventSubscription} from "fbemitter";
 import styled from "@emotion/styled";
 import {Typography} from "@mui/material";
-
-// import tg_logo from "/assets/tg_logo.png"
 
 
 const ReadyComponent = styled.div`
@@ -30,10 +22,7 @@ const ReadyComponent = styled.div`
 `;
 
 
-export const App = () => {
-    // const {client, event, reloadClient} = useTdLib();
-
-
+export const AuthForm = () => {
     useEffect(() => {
         const subscriptions: EventSubscription[] = [];
         subscriptions.push(tdLibController.addListener("update", authStore.onUpdate));
@@ -42,7 +31,8 @@ export const App = () => {
         };
     }, []);
 
-    const authState = useRecoilValue(authAtom);
+
+    const authState = useAppSelector(state => state.auth);
 
     // const [isLogWithPhone, setIsLogWithPhone] = useState(false);
     //
@@ -139,6 +129,7 @@ export const App = () => {
         );
     }
 
+
     if (authState.isLoginByPhoneNumber)
         return <Phone/>;
     return <QrCode/>;
@@ -146,19 +137,7 @@ export const App = () => {
 
     return (
         <div>
-            <h1>Lol Kek</h1>
-            <button type="button" onClick={() => {
-                client?.send({
-                    "@type": "logOut"
-                });
-            }}>
-                Log out
-            </button>
 
-            <button type="button" onClick={() => {
-            }}>
-                Log with phone number
-            </button>
         </div>
     );
 };

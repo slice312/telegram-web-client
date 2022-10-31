@@ -1,16 +1,12 @@
 import {useState} from "react";
-import {TdObject} from "tdweb";
-import {authStore, authAtom} from "@/shared/stores/auth";
-
-import styled from "@emotion/styled";
 import {Button, TextField, Typography} from "@mui/material";
-import {useRecoilValue} from "recoil";
-import {WaitCode} from "@/pages/Auth/Phone/WaitCode";
+import styled from "@emotion/styled";
 
+import {useAppSelector} from "@/store";
+import {authStore} from "@/td/auth";
 
-interface Props {
-    event: TdObject;
-}
+import {WaitCode} from "./WaitCode";
+
 
 const Form = styled.form`
     display: flex;
@@ -20,9 +16,8 @@ const Form = styled.form`
 `;
 
 
-export const Phone = ({event}: Props) => {
-    // const {client} = useTdLib();
-    const authState = useRecoilValue(authAtom);
+export const Phone = () => {
+    const authState = useAppSelector(state => state.auth);
 
     if (authState.isWaitConfirmationCode)
         return <WaitCode/>;

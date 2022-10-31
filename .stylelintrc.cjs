@@ -1,6 +1,5 @@
 module.exports = {
     plugins: [
-        "stylelint-scss"
     ],
     ignoreFiles: [
         "node_modules/*",
@@ -8,7 +7,6 @@ module.exports = {
         "build/**",
         "dist/**"
     ],
-    customSyntax: "postcss-scss",
     rules: {
         "indentation": 4, // отступы, вложеноость
         "max-empty-lines": 3, // максимальное кол-во пустых строк
@@ -54,9 +52,5 @@ module.exports = {
 
         // recommended rules
         "at-rule-no-unknown": null,
-        "scss/at-rule-no-unknown": true,
-        // any other rules you'd want to change e.g.
-        "scss/dollar-variable-pattern": /[a-z][a-zA-Z]+/,
-        "scss/selector-no-redundant-nesting-selector": true,
     }
 };
