@@ -1,7 +1,8 @@
 import React from "react";
-import {Box, AppBar, IconButton, Toolbar, Button, Typography} from "@mui/material";
+import {InputBase, IconButton, TextField} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import styled from "@emotion/styled";
+import {ChatList} from "@/components/chatsBar/chatList/ChatList";
 
 
 interface Props {
@@ -9,43 +10,47 @@ interface Props {
     setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div(({theme}) => `
+  padding: 8px;
   min-height: 100vh;
+  border-right: 1px solid ${theme.palette.secondary.main};
+`);
+
+const Header = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 4px;
 `;
 
 export const ChatsBar = ({darkMode, setDarkMode}: Props) => {
     return (
         <Wrapper>
-            <Box sx={{flexGrow: 1}}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{mr: 2}}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                            News
-                        </Typography>
-                        <Button color="inherit">Login</Button>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-            <Typography>
-                slkrfl
-            </Typography>
-            <Button
-                variant={"contained"}
-                onClick={() => {
-                    setDarkMode(!darkMode);
-                }}
-            >
-                estebes
-            </Button>
+            <Header>
+                <IconButton
+                    size={"large"}
+                    onClick={() => {
+                        setDarkMode(!darkMode);
+                    }}
+                >
+                    <MenuIcon fontSize={"large"}/>
+                </IconButton>
+                <TextField
+                    placeholder="Search"
+                    sx={{fontSize: "20px", mr: "4px"}}
+                    size={"small"}
+                    color={"primary"}
+                    fullWidth
+                    inputProps={{
+                        style: {
+                            fontSize: 18,
+                            width: "100%",
+                            display: "block"
+                        }
+                    }}
+                />
+            </Header>
+            <ChatList/>
         </Wrapper>
     );
 };

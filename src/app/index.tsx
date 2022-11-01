@@ -164,7 +164,9 @@ export const App = () => {
             {/*</button>*/}
             <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
                 <Paper elevation={0} square>
-                    <ChatsBar darkMode={darkMode} setDarkMode={setDarkMode}/>
+                    <div style={{display: "flex"}}>
+                        <ChatsBar darkMode={darkMode} setDarkMode={setDarkMode}/>
+                    </div>
                 </Paper>
             </ThemeProvider>
 
