@@ -28,6 +28,5 @@ export const authSlice = createSlice({
             state.isWaitConfirmationCode = false;
             state.qrCodeLink = action.payload;
         }
-
     }
 });

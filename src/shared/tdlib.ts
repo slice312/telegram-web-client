@@ -61,11 +61,6 @@ class TdLibController extends EventEmitter {
         });
     }
 
-
-    // public addListener(eventType: string, callback: (update: TdObject) => void): EventSubscription {
-    //     return this.emitter.addListener(eventType, callback);
-    // }
-
     private readonly onUpdate = (update: TdObject) => {
         console.log("UPDATE,", update);
         // console.log("EMITTER", this.emitter);
