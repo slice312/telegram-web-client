@@ -1,36 +1,18 @@
 import {useEffect, useRef} from "react";
 import {Button, Typography} from "@mui/material";
-
 import QRCodeStyling from "qr-code-styling";
+
+import {authStore} from "@/td/auth";
+import {useAppSelector} from "@/store";
+
+import {Container} from "./styles";
+
 import telegramLogo from "@/assets/images/telegram-logo.png";
 
 
-import {authAtom, authStore} from "@/shared/stores/auth";
-import {useRecoilValue} from "recoil";
-import styled from "@emotion/styled";
-
-
-interface Props {
-    onPhone: () => void;
-}
-
-
-
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 25px;
-    gap: 25px;
-`;
-
-
-export const QrCode = ({onPhone}: Props) => {
-    const link = useRecoilValue(authAtom).qrCodeLink;
-    console.log("QrCode", link);
-    // const {client, reloadClient} = useTdLib();
+export const QrCode = () => {
+    const qrCodeLink = useAppSelector(state => state.auth.qrCodeLink);
+    console.log("QrCode", qrCodeLink);
 
     const qr = useRef<HTMLDivElement>(null);
 
@@ -39,7 +21,7 @@ export const QrCode = ({onPhone}: Props) => {
         const qrCode = new QRCodeStyling({
             width: 300,
             height: 300,
-            data: link,
+            data: qrCodeLink,
             margin: 0,
             image: telegramLogo,
             qrOptions: {
@@ -63,7 +45,7 @@ export const QrCode = ({onPhone}: Props) => {
             qr.current.innerHTML = "";
             qrCode.append(qr.current);
         }
-    }, [link]);
+    }, [qrCodeLink]);
 
     return (
         <Container>
@@ -72,13 +54,11 @@ export const QrCode = ({onPhone}: Props) => {
             </Typography>
             <div ref={qr}></div>
             <Typography>
-                1. Open exteraGram or any other client on your phone <br/>
-                2. Go to Settings > Devices > Scan QR <br/>
-                3. Scan this image to Log in
+                1. Open Telegram on your phone <br/>
+                2. Go to Settings {">"} Devices {">"} Link Desktop Device<br/>
+                3. Point your phone at this screen to confirm login
             </Typography>
-            <Button variant="text"  onClick={() => {
-                void authStore.setToPhone();
-            }}>
+            <Button variant="text" onClick={() => authStore.setToPhone()}>
                 Log with phone number
             </Button>
         </Container>

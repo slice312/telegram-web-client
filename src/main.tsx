@@ -1,13 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {App} from "./app";
-import {RecoilRoot} from "recoil";
-import RecoilNexus from "recoil-nexus";
+import {Provider} from "react-redux";
+import {BrowserRouter} from "react-router-dom";
+
+import {App} from "./app/App";
+import {store} from "./store";
 
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-    <RecoilRoot>
-        <RecoilNexus/>
-        <App/>
-    </RecoilRoot>
+    <Provider store={store}>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
+    </Provider>
 );

@@ -4,11 +4,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import styled from "@emotion/styled";
 import {ChatList} from "@/components/chatsBar/chatList/ChatList";
 
+import {useAppTheme} from "@/shared/ui/themeProvider";
 
-interface Props {
-    darkMode: boolean;
-    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 const Wrapper = styled.div(({theme}) => `
   padding: 8px;
@@ -23,14 +20,17 @@ const Header = styled.div`
   gap: 4px;
 `;
 
-export const ChatsBar = ({darkMode, setDarkMode}: Props) => {
+
+export const ChatsBar = () => {
+    const {isDarkMode, setMode} = useAppTheme();
+
     return (
         <Wrapper>
             <Header>
                 <IconButton
                     size={"large"}
                     onClick={() => {
-                        setDarkMode(!darkMode);
+                        setMode(!isDarkMode);
                     }}
                 >
                     <MenuIcon fontSize={"large"}/>

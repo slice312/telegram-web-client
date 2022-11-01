@@ -1,6 +1,7 @@
-import {EventEmitter, EventSubscription} from "fbemitter";
+import {EventEmitter} from "fbemitter";
 import TdClient, {TdObject, TdOptions} from "tdweb";
-import {TdMethods} from "@/shared/stores/tdMethods";
+
+import {TdMethods} from "@/td/tdMethods";
 
 
 class TdLibController extends EventEmitter {
