@@ -1,5 +1,4 @@
 import {createTheme} from "@mui/material/styles";
-import {blue} from "@mui/material/colors";
 
 
 export const darkTheme = createTheme({
@@ -18,7 +17,7 @@ export const darkTheme = createTheme({
             main: "#263238",
         },
         secondary: {
-            main: blue[500],
+            main: "#424242",
         },
     },
 });
