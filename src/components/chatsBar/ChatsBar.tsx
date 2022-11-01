@@ -1,10 +1,8 @@
 import React from "react";
-import {InputBase, IconButton, TextField} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import {TextField} from "@mui/material";
 import styled from "@emotion/styled";
 import {ChatList} from "@/components/chatsBar/chatList/ChatList";
-
-import {useAppTheme} from "@/shared/ui/themeProvider";
+import {Menu} from "@/components/menu/Menu";
 
 
 const Wrapper = styled.div(({theme}) => `
@@ -22,19 +20,11 @@ const Header = styled.div`
 
 
 export const ChatsBar = () => {
-    const {isDarkMode, setMode} = useAppTheme();
 
     return (
         <Wrapper>
             <Header>
-                <IconButton
-                    size={"large"}
-                    onClick={() => {
-                        setMode(!isDarkMode);
-                    }}
-                >
-                    <MenuIcon fontSize={"large"}/>
-                </IconButton>
+                <Menu/>
                 <TextField
                     placeholder="Search"
                     sx={{fontSize: "20px", mr: "4px"}}

@@ -48,9 +48,9 @@ export const ChatList = () => {
         {
             id: "2",
             avatar: "https://laravelnews.s3.amazonaws.com/images/laravel-vite-featured.jpg",
-            title: "Estebes Mukambetov",
+            title: "Talgat Tairov",
             lastSender: "Estebes",
-            date: "12.10.2022",
+            date: "13:43",
             message: "Privet kak dela",
             unreadCount: 10
         },
@@ -58,7 +58,7 @@ export const ChatList = () => {
             id: "3",
             // eslint-disable-next-line max-len
             avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/VK_Compact_Logo_%282021-present%29.svg/1200px-VK_Compact_Logo_%282021-present%29.svg.png",
-            title: "Estebes Mukambetov",
+            title: "Asel Kurmanbek",
             lastSender: "Estebes",
             date: "12.10.2022",
             message: "Privet kak dela",
@@ -67,9 +67,9 @@ export const ChatList = () => {
         {
             id: "4",
             avatar: "https://play-lh.googleusercontent.com/bYtqbOcTYOlgc6gqZ2rwb8lptHuwlNE75zYJu6Bn076-hTmvd96HH-6v7S0YUAAJXoJN",
-            title: "Estebes Mukambetov",
+            title: "Bakyt Shairbekov",
             lastSender: "Estebes",
-            date: "12.10.2022",
+            date: "11:21",
             message: "Privet kak dela",
             unreadCount: 10
         },
@@ -93,6 +93,7 @@ export const ChatList = () => {
         },
     ];
 
+
     return (
         <List sx={{width: "100%", maxWidth: 360, bgcolor: "background.paper"}}>
             {chats.map(chat =>
@@ -112,7 +113,7 @@ export const ChatList = () => {
                                             fontSize: 18,
                                             fontWeight: 700,
                                         }}>
-                                        {"Estebes Mukambetovdaefaefaefaef"}
+                                        {chat.title}
                                     </Typography>
                                     <Typography>
                                         {chat.date}
