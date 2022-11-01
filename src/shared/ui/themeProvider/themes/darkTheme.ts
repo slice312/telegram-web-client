@@ -1,4 +1,5 @@
 import {createTheme} from "@mui/material/styles";
+import {purple} from "@mui/material/colors";
 
 
 export const darkTheme = createTheme({
@@ -15,9 +16,10 @@ export const darkTheme = createTheme({
         mode: "dark",
         primary: {
             main: "#263238",
+            contrastText: purple[500]
         },
         secondary: {
             main: "#424242",
-        },
+        }
     },
 });

@@ -18,7 +18,7 @@ export const AuthForm = () => {
 
     if (!authState.isAuthenticated) {
         return (
-            <Paper elevation={0} square>
+            <Paper elevation={0} square sx={{display: "flex"}}>
                 <ChatsBar/>
             </Paper>
         );
