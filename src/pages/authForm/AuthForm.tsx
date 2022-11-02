@@ -33,6 +33,9 @@ export const AuthForm = () => {
 
 
 
+    return <Phone/>;
+
+
     if (!authState.isAuthenticated) {
         return (
             <Paper elevation={0} square>
