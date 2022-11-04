@@ -1,5 +1,4 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import GroupIcon from "@mui/icons-material/Group";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import PersonIcon from "@mui/icons-material/Person";
 import CallIcon from "@mui/icons-material/Call";
@@ -19,6 +18,7 @@ import {
 } from "@mui/material";
 import {useState, ReactNode} from "react";
 import {useAppTheme} from "@/shared/ui/themeProvider";
+import {NewGroup} from "@/components/menu/newGroup/NewGroup";
 
 
 interface MenuItem {
@@ -37,11 +37,6 @@ export const Menu = () => {
     };
 
     const menu: MenuItem[] = [
-        {
-            icon: <GroupIcon sx={{color: "white"}}/>,
-            title: "New Group",
-            color: "#2196f3"
-        },
         {
             icon: <ThumbDownIcon sx={{color: "white"}}/>,
             title: "New Channel",
@@ -98,21 +93,26 @@ export const Menu = () => {
                             </Typography>
                         </ListItemText>
                     </ListItem>
+                    <ListItem>
+                        <NewGroup/>
+                    </ListItem>
                     {menu.map((item, index) =>
                         <ListItem key={index}>
-                            <ListItemAvatar>
-                                <Avatar
-                                    sx={{bgcolor: item.color, width: 36, height: 36}}
-                                    variant={"rounded"}>
+                            <ListItemButton>
+                                <ListItemAvatar>
+                                    <Avatar
+                                        sx={{bgcolor: item.color, width: 36, height: 36}}
+                                        variant={"rounded"}>
 
-                                    {item.icon}
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText>
-                                <Typography fontSize={18}>
-                                    {item.title}
-                                </Typography>
-                            </ListItemText>
+                                        {item.icon}
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText>
+                                    <Typography fontSize={18}>
+                                        {item.title}
+                                    </Typography>
+                                </ListItemText>
+                            </ListItemButton>
                         </ListItem>
                     )}
                     <ListItem>
