@@ -62,7 +62,13 @@ class TdLibController extends EventEmitter {
     }
 
     private readonly onUpdate = (update: TdObject) => {
-        console.log("UPDATE,", update);
+        const type = update["@type"];
+        // TODO: убрал пока лишние события из логироввания
+        if (type !== "updateOption" && type !== "updateAnimationSearchParameters"
+            && type !== "updateSelectedBackground"
+        ) {
+            console.log("UPDATE,", update);
+        }
         // console.log("EMITTER", this.emitter);
         this.emit("update", update);
         // super.emit("update", update);

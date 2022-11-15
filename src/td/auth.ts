@@ -43,10 +43,11 @@ class AuthStore {
                 break;
             case TdAuthState.authorizationStateWaitPhoneNumber:
                 if (!auth.isLoginByPhoneNumber) {
-                    await tdLibController.send({
+                    const result = await tdLibController.send({
                         "@type": TdMethods.requestQrCodeAuthentication,
                         other_user_ids: []
                     });
+                    console.log("TdMethods.requestQrCodeAuthentication", result);
                 }
                 break;
             case TdAuthState.authorizationStateWaitCode:
@@ -56,6 +57,14 @@ class AuthStore {
                 store.dispatch(authSlice.actions.waitQrCodeConfirmation(authState?.link || ""));
                 break;
             case TdAuthState.authorizationStateReady:
+                // debugger
+
+                store.dispatch(authSlice.actions.authenticatedSuccessful());
+                await tdLibController.send({
+                    "@type": "loadChats",
+                    limit: 300
+                });
+                console.log("getChats");
                 // TODO: тут че
                 break;
             default:
