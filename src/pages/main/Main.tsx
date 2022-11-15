@@ -1,7 +1,11 @@
+import {Paper} from "@mui/material";
+import {ChatsBar} from "@/components/chatsBar/ChatsBar";
+
+
 export const Main = () => {
     return (
-        <>
-            Authorized
-        </>
+        <Paper elevation={0} square sx={{display: "flex"}}>
+            <ChatsBar/>
+        </Paper>
     );
 };

@@ -4,29 +4,13 @@ import {Phone} from "./phone/Phone";
 import {useAppSelector} from "@/store";
 
 
-import {Paper} from "@mui/material";
-import {ChatsBar} from "@/components/chatsBar/ChatsBar";
-
-
-
+import {Navigate} from "react-router-dom";
 
 
 export const AuthForm = () => {
     const authState = useAppSelector(state => state.auth);
-
-
-
-    return <Phone/>;
-
-
-    if (!authState.isAuthenticated) {
-        return (
-            <Paper elevation={0} square sx={{display: "flex"}}>
-                <ChatsBar/>
-            </Paper>
-        );
-    }
-
+    if (authState.isAuthenticated)
+        return <Navigate to="/"/>;
 
     if (authState.isLoginByPhoneNumber)
         return <Phone/>;
