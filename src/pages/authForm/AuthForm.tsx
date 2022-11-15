@@ -9,11 +9,8 @@ import {Navigate} from "react-router-dom";
 
 export const AuthForm = () => {
     const authState = useAppSelector(state => state.auth);
-
-
     if (authState.isAuthenticated)
         return <Navigate to="/"/>;
-
 
     if (authState.isLoginByPhoneNumber)
         return <Phone/>;
@@ -21,7 +18,7 @@ export const AuthForm = () => {
 
 
     return (
-        <div>
-        </div>
+        <>
+        </>
     );
 };
